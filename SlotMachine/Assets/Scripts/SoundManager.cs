@@ -1,0 +1,59 @@
+/*
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SoundManager : MonoBehaviour
+{
+	public static SoundManager Instance { get; private set; }
+
+	private float volumeMultiplier;
+	private const string SOUND_VOLUME_MULTIPLIER = "soundVolumeMultiplier";
+
+	private void Awake()
+	{
+		Instance = this;
+
+		volumeMultiplier = PlayerPrefs.GetFloat(SOUND_VOLUME_MULTIPLIER, 0.5f);
+	}
+
+	private void Start()
+	{
+		DeliveryManager.Instance.OnDeliverySuccess += DeliveryManager_OnDeliverySuccess;
+		DeliveryManager.Instance.OnDeliveryFailed += DeliveryManager_OnDeliveryFailed;
+
+		CuttingCounter.OnAnyCut += CuttingCounter_OnAnyCut;
+
+		Player.Instance.OnObjectPicked += Player_OnObjectPicked;
+
+		Counter.OnObjectDropped += Counter_OnObjectDropped;
+
+		TrashCounter.OnObjectTrashed += TrashCounter_OnObjectTrashed;
+	}
+
+	private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volume = 1f)
+	{
+		AudioSource.PlayClipAtPoint(audioClipArray[Random.Range(0, audioClipArray.Length)], position, volume * volumeMultiplier);
+	}
+
+	private void PlaySound(AudioClip audioClip, Vector3 position, float volume = 1f)
+	{
+		AudioSource.PlayClipAtPoint(audioClip, position, volume * volumeMultiplier);
+	}
+
+	public void ChangeVolumeMultiplier()
+	{
+		volumeMultiplier += 0.1f;
+
+		if (volumeMultiplier > 1.01f)
+		{
+			volumeMultiplier = 0f;
+		}
+
+		PlayerPrefs.SetFloat(SOUND_VOLUME_MULTIPLIER, volumeMultiplier);
+		PlayerPrefs.Save();
+	}
+
+	public float GetVolumeMultiplier() { return volumeMultiplier; }
+}
+*/
