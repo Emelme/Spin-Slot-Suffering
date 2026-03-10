@@ -7,12 +7,11 @@ public class ShopItem : MonoBehaviour
 {
     public InventoryItemType item;
 
-    public int[] prices;
+    public int price;
+    public int priceMult;
 
     private string richText = "<dangle a=0.3><wave a=0.3>";
     public TextAnimator_TMP priceText;
-    
-    private int priceIndex = 0;
     
     public static ShopItem instance;
 
@@ -23,15 +22,16 @@ public class ShopItem : MonoBehaviour
 
     private void Update()
     {
-        priceText.SetText("" + richText + prices[priceIndex].ToString());
+        priceText.SetText("" + richText + price.ToString());
     }
     
     public void Buy()
     {
         Debug.Log("");
         
-        MoneyManager.instance.RemoveMoney(prices[priceIndex]);
-        priceIndex++;
+        MoneyManager.instance.RemoveMoney(price);
+
+        price *= priceMult;
         
         InventoryManager.instance.AddInventoryItem(item);
     }

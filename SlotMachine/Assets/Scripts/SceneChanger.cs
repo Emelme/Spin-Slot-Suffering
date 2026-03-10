@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -6,81 +5,65 @@ using UnityEngine.UI;
 
 public class SceneChanger : MonoBehaviour
 {
-    public GameObject camera;
+	public GameObject camera;
 
-    public Image fadeImage;
-    
-    public float changeTime;
-    
-    public Vector3 scene;
+	public Image fadeImage;
+	public float changeTime;
 
-    public bool isSlot;
-    public bool isShop;
-    public bool isUpgrade;
-    
-    public GameObject slotUI;
-    public GameObject shopUI;
-    public GameObject upgradeUI;
+	public Vector3 scene;
 
-    private void Start()
-    {
-        isSlot = true;
-        isShop = false;
-        isUpgrade = false;
-        
-        slotUI.SetActive(isSlot);
-        shopUI.SetActive(!isSlot);
-        upgradeUI.SetActive(!isSlot);
-        
-        camera.transform.position = new Vector3(0f, 0f, -10f);
-    }
+	public bool isSlot;
+	public bool isShop;
+	public bool isUpgrade;
 
-    public void ChangeSlot()
-    {
-        isSlot = true;
-        isShop = false;
-        isUpgrade = false;
-        
-        slotUI.SetActive(isSlot);
-        shopUI.SetActive(!isSlot);
-        upgradeUI.SetActive(!isSlot);
-        
-        StartCoroutine(ChangeScene());
-    }
+	public GameObject slotUI;
+	public GameObject shopUI;
+	public GameObject upgradeUI;
 
-    public void ChangeShop()
-    {
-        isShop = true;
-        isSlot = false;
-        isUpgrade = false;
-        
-        shopUI.SetActive(isShop);
-        slotUI.SetActive(!isShop);
-        upgradeUI.SetActive(!isShop);
-        
-        StartCoroutine(ChangeScene());
-    }
+	private void Start()
+	{
+		SetState(true, false, false);
+		camera.transform.position = new Vector3(0f, 0f, -10f);
+	}
 
-    public void ChangeUpgrade()
-    {
-        isUpgrade = true;
-        isSlot = false;
-        isShop = false;
-        
-        upgradeUI.SetActive(isUpgrade);
-        shopUI.SetActive(!isUpgrade);
-        slotUI.SetActive(!isUpgrade);
+	public void ChangeSlot()
+	{
+		StartCoroutine(ChangeScene(true, false, false));
+	}
 
-        StartCoroutine(ChangeScene());
-    }
-    
-    private IEnumerator ChangeScene()
-    {
-        fadeImage.DOFade(1f, changeTime);
-        yield return new WaitForSeconds(changeTime);
-        
-        camera.transform.position = scene;
-        
-        fadeImage.DOFade(0f, changeTime);
-    }
+	public void ChangeShop()
+	{
+		StartCoroutine(ChangeScene(false, true, false));
+	}
+
+	public void ChangeUpgrade()
+	{
+		StartCoroutine(ChangeScene(false, false, true));
+	}
+
+	private IEnumerator ChangeScene(bool slot, bool shop, bool upgrade)
+	{
+		// Fade to black
+		yield return fadeImage.DOFade(1f, changeTime).WaitForCompletion();
+
+		// Apply state
+		SetState(slot, shop, upgrade);
+
+		// Move camera
+		camera.transform.position = scene;
+
+		// Fade back
+		yield return fadeImage.DOFade(0f, changeTime).WaitForCompletion();
+	}
+
+	private void SetState(bool slot, bool shop, bool upgrade)
+	{
+		isSlot = slot;
+		isShop = shop;
+		isUpgrade = upgrade;
+
+		slotUI.SetActive(isSlot);
+		shopUI.SetActive(isShop);
+		upgradeUI.SetActive(isUpgrade);
+	}
 }
