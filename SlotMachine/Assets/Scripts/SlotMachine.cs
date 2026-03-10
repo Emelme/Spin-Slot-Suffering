@@ -27,7 +27,7 @@ public class SlotMachine : MonoBehaviour
         
         while (true)
         {
-            
+            MoneyManager.instance.RemoveMoney(GameData.instance.slotMachinePriceToSpin);
             
             SingleSlotType singleSlotType1;
             SingleSlotType singleSlotType2;

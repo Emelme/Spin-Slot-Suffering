@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -13,10 +14,63 @@ public class SceneChanger : MonoBehaviour
     
     public Vector3 scene;
 
-    public void StartChangeCoroutine()
+    public bool isSlot;
+    public bool isShop;
+    public bool isUpgrade;
+    
+    public GameObject slotUI;
+    public GameObject shopUI;
+    public GameObject upgradeUI;
+
+    private void Start()
     {
+        isSlot = true;
+        isShop = false;
+        isUpgrade = false;
         
-        Debug.Log("StartChangeCoroutine");
+        slotUI.SetActive(isSlot);
+        shopUI.SetActive(!isSlot);
+        upgradeUI.SetActive(!isSlot);
+        
+        camera.transform.position = new Vector3(0f, 0f, -10f);
+    }
+
+    public void ChangeSlot()
+    {
+        isSlot = true;
+        isShop = false;
+        isUpgrade = false;
+        
+        slotUI.SetActive(isSlot);
+        shopUI.SetActive(!isSlot);
+        upgradeUI.SetActive(!isSlot);
+        
+        StartCoroutine(ChangeScene());
+    }
+
+    public void ChangeShop()
+    {
+        isShop = true;
+        isSlot = false;
+        isUpgrade = false;
+        
+        shopUI.SetActive(isShop);
+        slotUI.SetActive(!isShop);
+        upgradeUI.SetActive(!isShop);
+        
+        StartCoroutine(ChangeScene());
+    }
+
+    public void ChangeUpgrade()
+    {
+        isUpgrade = true;
+        isSlot = false;
+        isShop = false;
+        
+        upgradeUI.SetActive(isUpgrade);
+        shopUI.SetActive(!isUpgrade);
+        slotUI.SetActive(!isUpgrade);
+
         StartCoroutine(ChangeScene());
     }
     

@@ -31,6 +31,11 @@ public class MoneyManager : MonoBehaviour
     {
         this.money += money;
     }
+
+    public void RemoveMoney(int money)
+    {
+        this.money -= money;
+    }
     
     private IEnumerator UpdateMoneyVisuals()
     {
